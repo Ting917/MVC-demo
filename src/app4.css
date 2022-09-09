@@ -1,0 +1,15 @@
+@keyframes change {
+    0%{background-color: bisque;}
+    100%{background-color: brown;}
+}
+
+#app4 .circle {
+    border: 1px solid grey;
+    width: 30vw;
+    height: 30vh;
+    border-radius: 50%;
+}
+
+#app4 .circle.active {
+    animation: change 1s infinite alternate linear;
+}
