@@ -1,9 +1,25 @@
+import $ from 'jquery'
 import './app3.css'
-import $ from "jquery"
 
+const html = `
+    <section id="app3">
+      <div class="square"></div>
+    </section>
+`
+const $element = $(html).appendTo($('body>.page'))
 const $square = $('#app3 .square')
+const localKey = 'app3.active'
+// yes no undefined
+const active = localStorage.getItem(localKey) === 'yes'
 
-$square.on('click',()=>{
-    $square.toggleClass('active')
-    // toggleClass() 对设置或移除被选元素的一个或多个类进行切换。 该方法检查每个元素中指定的类。如果不存在则添加类,如果已设置则删除。
+$square.toggleClass('active', active)
+
+$square.on('click', () => {
+  if ($square.hasClass('active')) {
+    $square.removeClass('active')
+    localStorage.setItem(localKey, 'no')
+  } else {
+    $square.addClass('active')
+    localStorage.setItem('app3.active', 'yes')
+  }
 })

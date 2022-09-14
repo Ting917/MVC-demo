@@ -1,38 +1,43 @@
 import './app1.css'
-import $ from 'jquery'
+import Vue from 'vue'
 
-const $button1 = $('#add')
-const $button2 = $('#subtract')
-const $button3 = $('#multiply')
-const $button4 = $('#divide')
-const $number = $('#number')
-const n = localStorage.getItem('n')
-$number.text(n || 100)
+const init = (el) => {
+new Vue({
+    el: el,
+    data: {n: parseFloat(localStorage.getItem('n')) || 100}, 
+    methods: {
+      add() {
+        this.n += 1
+      },
+      minus() {
+        this.n -= 1
+      },
+      mul() {
+        this.n *= 2
+      },
+      div() {
+        this.n /= 2
+      },
+    },
+    watch: {
+      n: function () {
+        localStorage.setItem('n', this.n)
+      }
+    },
+    template: `
+      <section>
+        <div class="output">
+          <span id="number">{{n}}</span>
+        </div>
+        <div class="actions">
+          <button @click="add">+1</button>
+          <button @click="minus">-1</button>
+          <button @click="mul">*2</button>
+          <button @click="div">÷2</button>
+        </div>
+      </section>
+    `
+  })
+}
 
-$button1.on('click', ()=>{
-    let n = parseInt($number.text())
-    n += 1
-    localStorage.setItem('n',n)
-    $number.text(n)
-})
-
-$button2.on('click', ()=>{
-    let n = parseInt($number.text())
-    n -= 1
-    localStorage.setItem('n',n)
-    $number.text(n)
-})
-
-$button3.on('click', ()=>{
-    let n = parseInt($number.text())
-    n *= 2
-    localStorage.setItem('n',n)
-    $number.text(n)
-})
-
-$button4.on('click', ()=>{
-    let n = parseInt($number.text())
-    n /= 2
-    localStorage.setItem('n',n)
-    $number.text(n)
-})
+export default init
